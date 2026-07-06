@@ -8,9 +8,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Amiri:ital@0;1&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f3efe6;          /* كريمي */
+  --bg:#f3efe6;
   --card:#ffffff;
-  --ink:#1e2b20;         /* أخضر غامق جداً للنصوص */
+  --ink:#1e2b20;
   --muted:#6f7a6a;
   --green-900:#22371f;
   --green-700:#3a5a34;
@@ -49,31 +49,32 @@ h2{font-size:clamp(26px,4.5vw,40px)}
 .fpill.active{background:var(--green-900);color:#fff;border-color:var(--green-900)}
 
 /* ===== Product grid ===== */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:22px;margin-top:34px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px;margin-top:34px}
 .card{background:var(--card);border-radius:var(--radius);padding:12px 12px 18px;
   box-shadow:0 10px 30px rgba(40,55,35,.06);transition:.25s;display:flex;flex-direction:column}
 .card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(40,55,35,.10)}
 .card.hidden{display:none}
 .carousel{position:relative;border-radius:16px;overflow:hidden;background:var(--green-100)}
 .slides{display:flex;transition:transform .35s ease}
-.slide{min-width:100%;aspect-ratio:1/1.05;display:flex;align-items:center;justify-content:center}
-.slide svg{width:100%;height:100%}
+.slide{min-width:100%;aspect-ratio:1/1.05}
+.slide img{width:100%;height:100%;object-fit:cover;display:block}
 .nav{position:absolute;bottom:10px;left:10px;display:flex;gap:6px}
 .nav button{width:32px;height:32px;border-radius:50%;border:none;background:rgba(30,43,32,.85);
   color:#fff;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center}
 .nav button:hover{background:var(--green-900)}
 .dots{position:absolute;bottom:16px;right:14px;display:flex;gap:5px}
-.dots span{width:6px;height:6px;border-radius:50%;background:rgba(30,43,32,.25)}
-.dots span.on{background:var(--green-900)}
+.dots span{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55)}
+.dots span.on{background:#fff}
 .card-body{padding:14px 8px 0;display:flex;flex-direction:column;gap:8px;flex:1}
 .row1{display:flex;justify-content:space-between;align-items:center}
 .pname{font-size:18px;font-weight:800}
 .ptag{font-size:11px;background:var(--green-100);color:var(--green-700);border-radius:99px;padding:3px 10px}
 .pspec{font-size:12.5px;color:var(--muted)}
-.swatches{display:flex;gap:8px;margin-top:2px}
+.swatches{display:flex;gap:8px;margin-top:2px;align-items:center}
 .sw{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid #fff;
   outline:1px solid #d9d3c4;transition:.15s}
 .sw.active{outline:2px solid var(--green-900);transform:scale(1.15)}
+.sw-name{font-size:12px;color:var(--muted);margin-right:4px}
 .order-line{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:10px}
 .order-btn{background:var(--green-900);color:#fff;border:none;border-radius:99px;
   padding:9px 20px;font-size:13.5px;font-weight:700;cursor:pointer;text-decoration:none}
@@ -94,10 +95,8 @@ h2{font-size:clamp(26px,4.5vw,40px)}
 .rnav button{width:44px;height:44px;border-radius:50%;border:none;background:var(--green-900);
   color:#fff;font-size:17px;cursor:pointer}
 .rnav button:hover{background:var(--green-700)}
-.review-visual{border-radius:var(--radius);overflow:hidden;min-height:340px;
-  background:linear-gradient(160deg,var(--green-300),var(--green-700));
-  display:flex;align-items:center;justify-content:center}
-.review-visual svg{width:75%;height:75%}
+.review-visual{border-radius:var(--radius);overflow:hidden;min-height:340px}
+.review-visual img{width:100%;height:100%;object-fit:cover;display:block}
 
 /* ===== CTA / footer ===== */
 .cta{background:var(--green-900);border-radius:var(--radius);color:#fff;text-align:center;
@@ -121,7 +120,7 @@ footer{text-align:center;color:#a09a88;font-size:13px;padding:34px 0 40px}
     <p class="sub">كل قطعة تنطبع ثلاثي الأبعاد بالعراق — تختار الموديل، اللون، والقياس، وتوصلك خلال يومين.</p>
     <div class="btns">
       <a class="btn btn-dark" href="#models">شوف الموديلات</a>
-      <a class="btn btn-light" href="#story">شلون نشتغل؟</a>
+      <a class="btn btn-light" href="#story">آراء الزبائن</a>
     </div>
   </div>
 </section>
@@ -131,9 +130,9 @@ footer{text-align:center;color:#a09a88;font-size:13px;padding:34px 0 40px}
   <div class="container">
     <div class="filters" id="filters">
       <button class="fpill active" data-cat="all">الكل</button>
-      <button class="fpill" data-cat="geo">هندسي</button>
       <button class="fpill" data-cat="min">مينيمال</button>
-      <button class="fpill" data-cat="rgb">إضاءة RGB</button>
+      <button class="fpill" data-cat="classic">كلاسيك</button>
+      <button class="fpill" data-cat="geo">هندسي</button>
     </div>
     <div class="grid" id="grid"></div>
   </div>
@@ -157,20 +156,7 @@ footer{text-align:center;color:#a09a88;font-size:13px;padding:34px 0 40px}
           </div>
         </div>
       </div>
-      <div class="review-visual">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="100" cy="168" rx="52" ry="8" fill="rgba(0,0,0,.18)"/>
-          <path d="M100 38 C 138 52 142 96 124 130 L 76 130 C 58 96 62 52 100 38 Z" fill="#f3efe6"/>
-          <g stroke="rgba(34,55,31,.16)" stroke-width="2.5">
-            <path d="M84 46 C 74 70 72 100 80 128" fill="none"/>
-            <path d="M100 40 C 96 70 96 100 100 129" fill="none"/>
-            <path d="M116 46 C 126 70 128 100 120 128" fill="none"/>
-          </g>
-          <rect x="82" y="130" width="36" height="26" rx="6" fill="#22371f"/>
-          <rect x="70" y="156" width="60" height="10" rx="5" fill="#1a2a18"/>
-          <circle cx="100" cy="86" r="30" fill="#ffe9b0" opacity=".28"/>
-        </svg>
-      </div>
+      <div class="review-visual"><img src="amwaj-1.jpg" alt="موديل أمواج بغرفة جلوس"></div>
     </div>
   </div>
 </section>
@@ -194,72 +180,65 @@ const IG_USER = "liblab";
 const WA_NUM  = "9647700000000";
 /* ====================== */
 
-/* ---------- الموديلات (الصور مؤقتة لحد ما توصل صور المنتجات) ---------- */
+/* colors: [الاسم, كود اللون للدائرة, رقم الصورة إذا اللون مصوّر (وإلا null)] */
 const MODELS = [
-  {id:"amwaj",  name:"أمواج",   cat:"geo", spec:"هندسي • ضوء دافئ",   colors:[["كريمي","#efe6cf"],["زيتي فاتح","#b9c49a"],["لبلابي","#7c9a63"],["غامق","#3a5a34"]]},
-  {id:"telal",  name:"تلال",    cat:"min", spec:"مينيمال • ضوء دافئ",  colors:[["أبيض","#f2f0ea"],["رملي","#dfd3b4"],["ميرمية","#a8b894"],["زيتوني","#5f7f52"]]},
-  {id:"sanabel",name:"سنابل",   cat:"geo", spec:"هندسي • ظلال جدارية", colors:[["كريمي","#efe6cf"],["ذهبي هادئ","#d9c08a"],["لبلابي","#7c9a63"],["غامق","#2f4a2c"]]},
-  {id:"nakhla", name:"نخلة",    cat:"min", spec:"مينيمال • خفيفة",     colors:[["أبيض","#f2f0ea"],["بيج","#e3d8bf"],["ميرمية","#a8b894"],["كحلي مخضر","#38503f"]]},
-  {id:"shalal", name:"شلال",    cat:"rgb", spec:"إضاءة RGB متغيرة",    colors:[["أبيض","#f2f0ea"],["نعناعي","#c4d9b8"],["لبلابي","#7c9a63"],["ليلي","#2c3a45"]]},
-  {id:"ghyoom", name:"غيوم",    cat:"rgb", spec:"إضاءة RGB متغيرة",    colors:[["كريمي","#efe6cf"],["رمادي دافئ","#cfcabc"],["ميرمية","#a8b894"],["غامق","#3a5a34"]]},
+  {id:"amwaj", name:"أمواج", cat:"min", tag:"الأكثر طلباً",
+   spec:"ظل ملتوي • أرجل خشب طبيعي",
+   photos:["amwaj-1.jpg","amwaj-2.jpg"],
+   colors:[["أبيض دافئ","#f2efe6",0],["بيج","#e3d8bf",null],["ميرمية","#a8b894",null],["زيتوني","#5f7f52",null]]},
+
+  {id:"mushroom", name:"مشروم", cat:"classic", tag:"26 سم",
+   spec:"ظل مضلع • قاعدة بيضاء",
+   photos:["mushroom-purple.jpg","mushroom-blue.jpg","mushroom-day.jpg"],
+   colors:[["بنفسجي","#8e4fa8",0],["أزرق","#4a6fb5",1],["وردي","#e8a8a1",null],["أخضر","#7c9a63",null]]},
+
+  {id:"qamar", name:"قمر", cat:"min", tag:"غطاء خشبي",
+   spec:"كروية • حامل بأرجل",
+   photos:["qamar-1.jpg","qamar-2.jpg","qamar-3.jpg"],
+   colors:[["أبيض دافئ","#f2efe6",0],["رملي","#dfd3b4",null],["ميرمية","#a8b894",null],["أسود","#2b2b28",null]]},
+
+  {id:"jarra", name:"جرة", cat:"geo", tag:"3 قواعد ملونة",
+   spec:"مضلعة • قاعدة بلونك",
+   photos:["jarra-olive.jpg","jarra-plum.jpg","jarra-brown.jpg"],
+   colors:[["زيتوني","#5f6f4a",0],["بنفسجي غامق","#5c5470",1],["بني","#8a5a3a",2],["كريمي","#efe6cf",null]]},
+
+  {id:"jadila", name:"جديلة", cat:"classic", tag:"قاعدة ملتوية",
+   spec:"ظل منسوج • قاعدة حلزونية",
+   photos:["jadila-terra.jpg","jadila-olive.jpg"],
+   colors:[["طيني","#b45f34",0],["زيتوني","#6a7a4d",1],["أبيض","#f2efe6",null],["أسود","#2b2b28",null]]},
 ];
 
-/* لمبة SVG مؤقتة — تنستبدل بصور المنتج الحقيقية */
-function lampSVG(tint, variant){
-  const shade = {
-    0:`<path d="M100 30 C 142 46 146 96 126 134 L 74 134 C 54 96 58 46 100 30 Z" fill="${tint}"/>
-       <g stroke="rgba(30,43,32,.14)" stroke-width="2.5" fill="none">
-         <path d="M82 40 C 70 66 68 102 78 132"/><path d="M100 32 C 95 66 95 102 100 133"/>
-         <path d="M118 40 C 130 66 132 102 122 132"/></g>`,
-    1:`<path d="M64 128 L 100 34 L 136 128 Z" fill="${tint}"/>
-       <g stroke="rgba(30,43,32,.14)" stroke-width="2.5" fill="none">
-         <path d="M84 128 L 100 44"/><path d="M116 128 L 100 44"/></g>`,
-    2:`<rect x="68" y="42" width="64" height="88" rx="30" fill="${tint}"/>
-       <g stroke="rgba(30,43,32,.14)" stroke-width="2.5" fill="none">
-         <path d="M82 48 C 78 76 78 104 82 126"/><path d="M118 48 C 122 76 122 104 118 126"/></g>`
-  }[variant % 3];
-  return `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-    <rect width="200" height="200" fill="none"/>
-    <circle cx="100" cy="84" r="46" fill="#ffe9b0" opacity=".30"/>
-    <ellipse cx="100" cy="170" rx="50" ry="7" fill="rgba(0,0,0,.13)"/>
-    ${shade}
-    <rect x="84" y="134" width="32" height="22" rx="5" fill="#22371f"/>
-    <rect x="72" y="156" width="56" height="10" rx="5" fill="#1a2a18"/>
-  </svg>`;
-}
-
-/* ---------- بناء الكروت ---------- */
 const state = {};
 const grid = document.getElementById("grid");
-MODELS.forEach((m,i)=>{
+
+MODELS.forEach((m)=>{
   const card = document.createElement("div");
   card.className = "card"; card.dataset.cat = m.cat;
-  const firstTint = m.colors[0][1];
+  const slides = m.photos.map(p=>`<div class="slide"><img src="${p}" loading="lazy" alt="موديل ${m.name} من لبلاب"></div>`).join("");
+  const dots = m.photos.map((_,i)=>`<span class="${i===0?'on':''}"></span>`).join("");
   card.innerHTML = `
     <div class="carousel">
-      <div class="slides" id="sl-${m.id}">
-        <div class="slide">${lampSVG(firstTint, i)}</div>
-        <div class="slide">${lampSVG(firstTint, i+1)}</div>
-        <div class="slide">${lampSVG(firstTint, i+2)}</div>
-      </div>
+      <div class="slides" id="sl-${m.id}">${slides}</div>
       <div class="nav">
-        <button onclick="moveSlide('${m.id}',1)">‹</button>
-        <button onclick="moveSlide('${m.id}',-1)">›</button>
+        <button onclick="moveSlide('${m.id}',1)" aria-label="التالي">‹</button>
+        <button onclick="moveSlide('${m.id}',-1)" aria-label="السابق">›</button>
       </div>
-      <div class="dots" id="dots-${m.id}"><span class="on"></span><span></span><span></span></div>
+      <div class="dots" id="dots-${m.id}">${dots}</div>
     </div>
     <div class="card-body">
-      <div class="row1"><span class="pname">${m.name}</span><span class="ptag">${m.cat==="rgb"?"RGB":"دافئ"}</span></div>
+      <div class="row1"><span class="pname">${m.name}</span><span class="ptag">${m.tag}</span></div>
       <div class="pspec">${m.spec} • تصميم حصري ما يتكرر</div>
-      <div class="swatches" id="swx-${m.id}"></div>
+      <div class="swatches" id="swx-${m.id}"><span class="sw-name" id="swn-${m.id}"></span></div>
       <div class="order-line">
         <a class="order-btn" target="_blank" rel="noopener" id="ord-${m.id}">اطلب</a>
         <span class="price-note">السعر بالرسالة</span>
       </div>
     </div>`;
   grid.appendChild(card);
+  state[m.id] = {i:0, n:m.photos.length};
 
   const swx = card.querySelector(`#swx-${m.id}`);
+  const swn = card.querySelector(`#swn-${m.id}`);
   m.colors.forEach((c,ci)=>{
     const b = document.createElement("div");
     b.className = "sw" + (ci===0?" active":"");
@@ -267,13 +246,14 @@ MODELS.forEach((m,i)=>{
     b.onclick = ()=>{
       swx.querySelectorAll(".sw").forEach(x=>x.classList.remove("active"));
       b.classList.add("active");
-      card.querySelectorAll(".slide").forEach((s,si)=> s.innerHTML = lampSVG(c[1], i+si));
+      swn.textContent = c[0];
+      if(c[2] !== null) goSlide(m.id, c[2]);
       setOrder(m, c[0]);
     };
-    swx.appendChild(b);
+    swx.insertBefore(b, swn);
   });
+  swn.textContent = m.colors[0][0];
   setOrder(m, m.colors[0][0]);
-  state[m.id] = 0;
 });
 
 function setOrder(m, colorName){
@@ -281,13 +261,12 @@ function setOrder(m, colorName){
   document.getElementById(`ord-${m.id}`).href = `https://wa.me/${WA_NUM}?text=${msg}`;
 }
 
-/* ---------- الكاروسيل ---------- */
-function moveSlide(id, dir){
-  state[id] = ((state[id]||0) + dir + 3) % 3;
-  /* RTL: نحرك لليمين بالموجب */
-  document.getElementById("sl-"+id).style.transform = `translateX(${state[id]*100}%)`;
-  document.querySelectorAll(`#dots-${id} span`).forEach((d,i)=>d.classList.toggle("on", i===state[id]));
+function goSlide(id, idx){
+  const st = state[id]; st.i = ((idx % st.n) + st.n) % st.n;
+  document.getElementById("sl-"+id).style.transform = `translateX(${st.i*100}%)`;
+  document.querySelectorAll(`#dots-${id} span`).forEach((d,i)=>d.classList.toggle("on", i===st.i));
 }
+function moveSlide(id, dir){ goSlide(id, state[id].i + dir); }
 
 /* ---------- الفلاتر ---------- */
 document.getElementById("filters").addEventListener("click", e=>{
