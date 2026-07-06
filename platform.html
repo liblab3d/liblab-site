@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لبلاب — إضاءة تنطبع حسب بيتك</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Amiri:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3efe6;          /* كريمي */
+  --card:#ffffff;
+  --ink:#1e2b20;         /* أخضر غامق جداً للنصوص */
+  --muted:#6f7a6a;
+  --green-900:#22371f;
+  --green-700:#3a5a34;
+  --green-500:#5f7f52;
+  --green-300:#9db487;
+  --green-100:#e4ead9;
+  --radius:22px;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',Tahoma,sans-serif}
+body{background:var(--bg);color:var(--ink)}
+.accent{font-family:'Amiri',serif;font-style:italic;font-weight:400}
+.pill-badge{display:inline-block;background:#fff;border:1px solid #e6e0d2;border-radius:99px;
+  padding:6px 18px;font-size:13px;color:var(--green-700);box-shadow:0 2px 8px rgba(40,55,35,.05)}
+section{padding:70px 20px}
+.container{max-width:1100px;margin:0 auto}
+h1,h2{text-align:center;font-weight:800;line-height:1.35}
+h1{font-size:clamp(32px,6vw,54px)}
+h2{font-size:clamp(26px,4.5vw,40px)}
+.sub{text-align:center;color:var(--muted);max-width:460px;margin:14px auto 0;font-size:16px;line-height:1.8}
+.center{text-align:center}
+
+/* ===== Hero ===== */
+.hero{padding-top:90px;padding-bottom:40px}
+.hero .btns{display:flex;gap:12px;justify-content:center;margin-top:28px}
+.btn{border:none;cursor:pointer;border-radius:99px;padding:14px 30px;font-size:15px;font-weight:700;
+  text-decoration:none;display:inline-block;transition:.2s}
+.btn-dark{background:var(--green-900);color:#fff}
+.btn-dark:hover{background:var(--green-700)}
+.btn-light{background:#fff;color:var(--ink);border:1px solid #e6e0d2}
+.btn-light:hover{border-color:var(--green-500)}
+
+/* ===== Filters ===== */
+.filters{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:36px 0 8px}
+.fpill{background:#fff;border:1px solid #e6e0d2;border-radius:99px;padding:10px 24px;
+  font-size:14px;font-weight:500;cursor:pointer;transition:.2s;color:var(--ink)}
+.fpill.active{background:var(--green-900);color:#fff;border-color:var(--green-900)}
+
+/* ===== Product grid ===== */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:22px;margin-top:34px}
+.card{background:var(--card);border-radius:var(--radius);padding:12px 12px 18px;
+  box-shadow:0 10px 30px rgba(40,55,35,.06);transition:.25s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(40,55,35,.10)}
+.card.hidden{display:none}
+.carousel{position:relative;border-radius:16px;overflow:hidden;background:var(--green-100)}
+.slides{display:flex;transition:transform .35s ease}
+.slide{min-width:100%;aspect-ratio:1/1.05;display:flex;align-items:center;justify-content:center}
+.slide svg{width:100%;height:100%}
+.nav{position:absolute;bottom:10px;left:10px;display:flex;gap:6px}
+.nav button{width:32px;height:32px;border-radius:50%;border:none;background:rgba(30,43,32,.85);
+  color:#fff;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center}
+.nav button:hover{background:var(--green-900)}
+.dots{position:absolute;bottom:16px;right:14px;display:flex;gap:5px}
+.dots span{width:6px;height:6px;border-radius:50%;background:rgba(30,43,32,.25)}
+.dots span.on{background:var(--green-900)}
+.card-body{padding:14px 8px 0;display:flex;flex-direction:column;gap:8px;flex:1}
+.row1{display:flex;justify-content:space-between;align-items:center}
+.pname{font-size:18px;font-weight:800}
+.ptag{font-size:11px;background:var(--green-100);color:var(--green-700);border-radius:99px;padding:3px 10px}
+.pspec{font-size:12.5px;color:var(--muted)}
+.swatches{display:flex;gap:8px;margin-top:2px}
+.sw{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid #fff;
+  outline:1px solid #d9d3c4;transition:.15s}
+.sw.active{outline:2px solid var(--green-900);transform:scale(1.15)}
+.order-line{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:10px}
+.order-btn{background:var(--green-900);color:#fff;border:none;border-radius:99px;
+  padding:9px 20px;font-size:13.5px;font-weight:700;cursor:pointer;text-decoration:none}
+.order-btn:hover{background:var(--green-700)}
+.price-note{font-size:12px;color:var(--muted)}
+
+/* ===== Reviews ===== */
+.reviews-wrap{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:40px;align-items:stretch}
+.review-card{background:#fff;border-radius:var(--radius);padding:38px 34px;display:flex;
+  flex-direction:column;box-shadow:0 10px 30px rgba(40,55,35,.06)}
+.review-card h3{font-size:26px;font-weight:800;line-height:1.4;margin-bottom:16px}
+.review-card p.quote{color:#3c4738;font-size:15.5px;line-height:2;flex:1}
+.review-foot{display:flex;justify-content:space-between;align-items:flex-end;margin-top:24px}
+.reviewer{font-size:14px}
+.reviewer b{display:block;font-size:15px}
+.reviewer span{color:var(--muted);font-size:12.5px}
+.rnav{display:flex;gap:8px}
+.rnav button{width:44px;height:44px;border-radius:50%;border:none;background:var(--green-900);
+  color:#fff;font-size:17px;cursor:pointer}
+.rnav button:hover{background:var(--green-700)}
+.review-visual{border-radius:var(--radius);overflow:hidden;min-height:340px;
+  background:linear-gradient(160deg,var(--green-300),var(--green-700));
+  display:flex;align-items:center;justify-content:center}
+.review-visual svg{width:75%;height:75%}
+
+/* ===== CTA / footer ===== */
+.cta{background:var(--green-900);border-radius:var(--radius);color:#fff;text-align:center;
+  padding:60px 24px;margin-top:20px}
+.cta h2{color:#fff}
+.cta p{color:#cfd8c6;margin:12px auto 26px;max-width:420px;line-height:1.9}
+footer{text-align:center;color:#a09a88;font-size:13px;padding:34px 0 40px}
+@media (max-width:760px){
+  .reviews-wrap{grid-template-columns:1fr}
+  .review-visual{min-height:240px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="container">
+    <div class="center"><span class="pill-badge">التشكيلة</span></div>
+    <h1 style="margin-top:16px">إضاءة تنطبع<br><span class="accent">حسب بيتك</span></h1>
+    <p class="sub">كل قطعة تنطبع ثلاثي الأبعاد بالعراق — تختار الموديل، اللون، والقياس، وتوصلك خلال يومين.</p>
+    <div class="btns">
+      <a class="btn btn-dark" href="#models">شوف الموديلات</a>
+      <a class="btn btn-light" href="#story">شلون نشتغل؟</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODELS ============ -->
+<section id="models" style="padding-top:20px">
+  <div class="container">
+    <div class="filters" id="filters">
+      <button class="fpill active" data-cat="all">الكل</button>
+      <button class="fpill" data-cat="geo">هندسي</button>
+      <button class="fpill" data-cat="min">مينيمال</button>
+      <button class="fpill" data-cat="rgb">إضاءة RGB</button>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section id="story">
+  <div class="container">
+    <div class="center"><span class="pill-badge">آراء الزبائن</span></div>
+    <h2 style="margin-top:14px">شنو <span class="accent">يگولون</span> عنا؟</h2>
+    <p class="sub">من غرف النوم لزوايا القعدة — هاي تجارب ناس طلبت وجربت.</p>
+    <div class="reviews-wrap">
+      <div class="review-card">
+        <h3 id="rv-title"></h3>
+        <p class="quote" id="rv-quote"></p>
+        <div class="review-foot">
+          <div class="reviewer"><b id="rv-name"></b><span id="rv-loc"></span></div>
+          <div class="rnav">
+            <button onclick="moveReview(1)">‹</button>
+            <button onclick="moveReview(-1)">›</button>
+          </div>
+        </div>
+      </div>
+      <div class="review-visual">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="100" cy="168" rx="52" ry="8" fill="rgba(0,0,0,.18)"/>
+          <path d="M100 38 C 138 52 142 96 124 130 L 76 130 C 58 96 62 52 100 38 Z" fill="#f3efe6"/>
+          <g stroke="rgba(34,55,31,.16)" stroke-width="2.5">
+            <path d="M84 46 C 74 70 72 100 80 128" fill="none"/>
+            <path d="M100 40 C 96 70 96 100 100 129" fill="none"/>
+            <path d="M116 46 C 126 70 128 100 120 128" fill="none"/>
+          </g>
+          <rect x="82" y="130" width="36" height="26" rx="6" fill="#22371f"/>
+          <rect x="70" y="156" width="60" height="10" rx="5" fill="#1a2a18"/>
+          <circle cx="100" cy="86" r="30" fill="#ffe9b0" opacity=".28"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section style="padding-top:10px">
+  <div class="container">
+    <div class="cta">
+      <h2>عندك زاوية تنتظر؟</h2>
+      <p>دزلنا صورة المكان ولون غرفتك — نرشحلك الموديل والقياس، ونطبعها إلك خلال يومين. الدفع عند الاستلام لكل العراق.</p>
+      <a class="btn btn-light" id="cta-order" target="_blank" rel="noopener">دزلنا رسالة</a>
+    </div>
+  </div>
+</section>
+
+<footer>لبلاب © 2026 — إضاءة مميزة مصنوعة بالعراق 🌿</footer>
+
+<script>
+/* ====== عدّل هنا ====== */
+const IG_USER = "liblab";
+const WA_NUM  = "9647700000000";
+/* ====================== */
+
+/* ---------- الموديلات (الصور مؤقتة لحد ما توصل صور المنتجات) ---------- */
+const MODELS = [
+  {id:"amwaj",  name:"أمواج",   cat:"geo", spec:"هندسي • ضوء دافئ",   colors:[["كريمي","#efe6cf"],["زيتي فاتح","#b9c49a"],["لبلابي","#7c9a63"],["غامق","#3a5a34"]]},
+  {id:"telal",  name:"تلال",    cat:"min", spec:"مينيمال • ضوء دافئ",  colors:[["أبيض","#f2f0ea"],["رملي","#dfd3b4"],["ميرمية","#a8b894"],["زيتوني","#5f7f52"]]},
+  {id:"sanabel",name:"سنابل",   cat:"geo", spec:"هندسي • ظلال جدارية", colors:[["كريمي","#efe6cf"],["ذهبي هادئ","#d9c08a"],["لبلابي","#7c9a63"],["غامق","#2f4a2c"]]},
+  {id:"nakhla", name:"نخلة",    cat:"min", spec:"مينيمال • خفيفة",     colors:[["أبيض","#f2f0ea"],["بيج","#e3d8bf"],["ميرمية","#a8b894"],["كحلي مخضر","#38503f"]]},
+  {id:"shalal", name:"شلال",    cat:"rgb", spec:"إضاءة RGB متغيرة",    colors:[["أبيض","#f2f0ea"],["نعناعي","#c4d9b8"],["لبلابي","#7c9a63"],["ليلي","#2c3a45"]]},
+  {id:"ghyoom", name:"غيوم",    cat:"rgb", spec:"إضاءة RGB متغيرة",    colors:[["كريمي","#efe6cf"],["رمادي دافئ","#cfcabc"],["ميرمية","#a8b894"],["غامق","#3a5a34"]]},
+];
+
+/* لمبة SVG مؤقتة — تنستبدل بصور المنتج الحقيقية */
+function lampSVG(tint, variant){
+  const shade = {
+    0:`<path d="M100 30 C 142 46 146 96 126 134 L 74 134 C 54 96 58 46 100 30 Z" fill="${tint}"/>
+       <g stroke="rgba(30,43,32,.14)" stroke-width="2.5" fill="none">
+         <path d="M82 40 C 70 66 68 102 78 132"/><path d="M100 32 C 95 66 95 102 100 133"/>
+         <path d="M118 40 C 130 66 132 102 122 132"/></g>`,
+    1:`<path d="M64 128 L 100 34 L 136 128 Z" fill="${tint}"/>
+       <g stroke="rgba(30,43,32,.14)" stroke-width="2.5" fill="none">
+         <path d="M84 128 L 100 44"/><path d="M116 128 L 100 44"/></g>`,
+    2:`<rect x="68" y="42" width="64" height="88" rx="30" fill="${tint}"/>
+       <g stroke="rgba(30,43,32,.14)" stroke-width="2.5" fill="none">
+         <path d="M82 48 C 78 76 78 104 82 126"/><path d="M118 48 C 122 76 122 104 118 126"/></g>`
+  }[variant % 3];
+  return `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <rect width="200" height="200" fill="none"/>
+    <circle cx="100" cy="84" r="46" fill="#ffe9b0" opacity=".30"/>
+    <ellipse cx="100" cy="170" rx="50" ry="7" fill="rgba(0,0,0,.13)"/>
+    ${shade}
+    <rect x="84" y="134" width="32" height="22" rx="5" fill="#22371f"/>
+    <rect x="72" y="156" width="56" height="10" rx="5" fill="#1a2a18"/>
+  </svg>`;
+}
+
+/* ---------- بناء الكروت ---------- */
+const state = {};
+const grid = document.getElementById("grid");
+MODELS.forEach((m,i)=>{
+  const card = document.createElement("div");
+  card.className = "card"; card.dataset.cat = m.cat;
+  const firstTint = m.colors[0][1];
+  card.innerHTML = `
+    <div class="carousel">
+      <div class="slides" id="sl-${m.id}">
+        <div class="slide">${lampSVG(firstTint, i)}</div>
+        <div class="slide">${lampSVG(firstTint, i+1)}</div>
+        <div class="slide">${lampSVG(firstTint, i+2)}</div>
+      </div>
+      <div class="nav">
+        <button onclick="moveSlide('${m.id}',1)">‹</button>
+        <button onclick="moveSlide('${m.id}',-1)">›</button>
+      </div>
+      <div class="dots" id="dots-${m.id}"><span class="on"></span><span></span><span></span></div>
+    </div>
+    <div class="card-body">
+      <div class="row1"><span class="pname">${m.name}</span><span class="ptag">${m.cat==="rgb"?"RGB":"دافئ"}</span></div>
+      <div class="pspec">${m.spec} • تصميم حصري ما يتكرر</div>
+      <div class="swatches" id="swx-${m.id}"></div>
+      <div class="order-line">
+        <a class="order-btn" target="_blank" rel="noopener" id="ord-${m.id}">اطلب</a>
+        <span class="price-note">السعر بالرسالة</span>
+      </div>
+    </div>`;
+  grid.appendChild(card);
+
+  const swx = card.querySelector(`#swx-${m.id}`);
+  m.colors.forEach((c,ci)=>{
+    const b = document.createElement("div");
+    b.className = "sw" + (ci===0?" active":"");
+    b.style.background = c[1]; b.title = c[0];
+    b.onclick = ()=>{
+      swx.querySelectorAll(".sw").forEach(x=>x.classList.remove("active"));
+      b.classList.add("active");
+      card.querySelectorAll(".slide").forEach((s,si)=> s.innerHTML = lampSVG(c[1], i+si));
+      setOrder(m, c[0]);
+    };
+    swx.appendChild(b);
+  });
+  setOrder(m, m.colors[0][0]);
+  state[m.id] = 0;
+});
+
+function setOrder(m, colorName){
+  const msg = encodeURIComponent(`هلو لبلاب 👋 حاب أطلب موديل ${m.name} — لون: ${colorName}`);
+  document.getElementById(`ord-${m.id}`).href = `https://wa.me/${WA_NUM}?text=${msg}`;
+}
+
+/* ---------- الكاروسيل ---------- */
+function moveSlide(id, dir){
+  state[id] = ((state[id]||0) + dir + 3) % 3;
+  /* RTL: نحرك لليمين بالموجب */
+  document.getElementById("sl-"+id).style.transform = `translateX(${state[id]*100}%)`;
+  document.querySelectorAll(`#dots-${id} span`).forEach((d,i)=>d.classList.toggle("on", i===state[id]));
+}
+
+/* ---------- الفلاتر ---------- */
+document.getElementById("filters").addEventListener("click", e=>{
+  if(!e.target.dataset.cat) return;
+  document.querySelectorAll(".fpill").forEach(p=>p.classList.remove("active"));
+  e.target.classList.add("active");
+  const cat = e.target.dataset.cat;
+  document.querySelectorAll(".card").forEach(c=>{
+    c.classList.toggle("hidden", cat!=="all" && c.dataset.cat!==cat);
+  });
+});
+
+/* ---------- آراء الزبائن ---------- */
+const REVIEWS = [
+  {title:"الجودة أحسن من توقعاتي", quote:"«تريدون الصدق؟ ترددت بالسعر بالبداية. بس من وصلت وشغلتها بغرفة النوم، عرفت ليش. الخامة، الظل اللي يطلع عالجدار... تستاهل كل فلس.»", name:"نور", loc:"بغداد — غرفة نوم"},
+  {title:"طلبت لون ما موجود بالسوق", quote:"«دورت بكل المحلات على لون يناسب ديكوري وما لگيت. دزيتلهم لون الغرفة وطبعوها بالضبط عليه. هاي الشغلة ما تلگيها بمكان ثاني.»", name:"أحمد", loc:"البصرة — زاوية عمل"},
+  {title:"وصلتني بيومين", quote:"«طلبتها هدية لصديقتي اللي عرست، وخفت ما توصل بالوقت. وصلت بيومين بتغليف حلو، وصديقتي گالت أحلى هدية وصلتها.»", name:"زهراء", loc:"أربيل — هدية"},
+];
+let ri = 0;
+function renderReview(){
+  const r = REVIEWS[ri];
+  document.getElementById("rv-title").textContent = r.title;
+  document.getElementById("rv-quote").textContent = r.quote;
+  document.getElementById("rv-name").textContent  = r.name;
+  document.getElementById("rv-loc").textContent   = r.loc;
+}
+function moveReview(dir){ ri = (ri + dir + REVIEWS.length) % REVIEWS.length; renderReview(); }
+renderReview();
+
+/* ---------- CTA ---------- */
+document.getElementById("cta-order").href = `https://ig.me/m/${IG_USER}`;
+</script>
+</body>
+</html>
